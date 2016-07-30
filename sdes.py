@@ -6,7 +6,7 @@ KEY = '0010010111' #Change the key here!
 FIXED_P10 = (3, 5, 2, 7, 4, 10, 1, 9, 8, 6)
 FIXED_P8 = (6, 3, 7, 4, 8, 5, 10, 9)
 FIXED_IO_P8 = (2, 6, 3, 1, 4, 8, 5, 7)
-FIXED_IP_INVERSE = [4, 1, 3, 5, 7, 2, 8, 6]
+FIXED_IP_INVERSE = (4, 1, 3, 5, 7, 2, 8, 6)
 FIXED_EP = (4, 1, 2, 3, 2, 3, 4, 1)
 FIXED_P4 = (2, 4, 3, 1)
 
