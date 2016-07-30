@@ -28,6 +28,9 @@ def permute(bits, order):
         variable order.
         order : A tuple specifying the order of permutation.
     """
+
+    print "Now, permuting the {} in the order: ".format(bits)
+    print " ".join(str(i) for i in order)
     return ''.join(bits[i-1] for i in order)
 
 
@@ -58,15 +61,18 @@ def getKey2(key_10_bit):
     return key2 
 
 def getRightPart(bits):
+    print "Seperating right part from {}.".format(bits)
     return bits[(len(bits)/2):]
 
 def getLeftPart(bits):
+    print "Seperating left part from {}.".format(bits)
     return bits[:(len(bits)/2)]
 
 def leftShift(original, times = 1):
     # Performs 'times' times shift left operation on the original
     # bits data
     for i in range(0, times):
+        print "Left Shifting %s, %d time."%(original, (i+1))
         original = original[1:] + original[0]
     return original
 
@@ -82,6 +88,8 @@ def xor(bits1, bits2):
     """
     if(len(bits1) != len(bits2)):
         return "Length should be same for both!"
+
+    print "Performing X-OR between %s and %s."%(bits1, bits2)
     return ''.join(str((int(bits1[i]) ^ int(bits2[i]))) for i in range(0, len(bits2)))
 
 
@@ -94,6 +102,10 @@ def lookup_in_sbox(bits):
     col = int(left[1] + left[2], 2)
     row1 = int(right[0] + right[3], 2)
     col1 = int(right[1] + right[2], 2)
+
+    print "The value at row %d and column %d in S0 is %d."%(row, col, S0[row][col])
+    print "The value at row %d and column %d in S1 is %d."%(row1, col1, S1[row1][col1])
+
     intermediate = '{0:02b}'.format(S0[row][col])
     intermediate += '{0:02b}'.format(S1[row1][col1])
     return permute(intermediate, FIXED_P4)
@@ -108,19 +120,40 @@ def func1(l, r, key):
     return xor(l, lookup_in_sbox(func(r, key))), r
 
 def encrypt(text):
+    print "Performing Encryption on {}".format(text)
     text = permute(text, FIXED_IO_P8)
     l, r = func1(getLeftPart(text), getRightPart(text), KEY1)
+    print "The left and right side after supplying key1 is :"
+    print "Left = ", l
+    print "Right = ", r
     l, r = r, l #Switching!
+    print "The left and right side after switching. :"
+    print "Left = ", l
+    print "Right = ", r
     l, r = func1(l, r, KEY2)
+    print "The left and right side after supplying key2 is :"
+    print "Left = ", l
+    print "Right = ", r
     encrypted = permute((l + r), FIXED_IP_INVERSE)
     print "Encrypted Cipher Text is {}".format(encrypted)
     return encrypted
 
 def decrypt(ct):
+    print "The Cipher text to decrypt is : {}".format(ct)
     ct = permute(ct, FIXED_IO_P8)
     l, r = func1(getLeftPart(ct), getRightPart(ct), KEY2)
+    print "The left and right side after supplying key2 is :"
+    print "Left = ", l
+    print "Right = ", r
     l, r = r, l #Switching!
+    print "The left and right side after switching. :"
+    print "Left = ", l
+    print "Right = ", r
     l, r = func1(l, r, KEY1)
+
+    print "The left and right side after supplying key1 is :"
+    print "Left = ", l
+    print "Right = ", r
     decrypted = permute((l + r), FIXED_IP_INVERSE)
     print "Decrypted Plain Text is {}".format(decrypted)
 
