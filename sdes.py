@@ -2,7 +2,7 @@ __author__ = "Hemal Shah"
 
 # Simple Data Encryption Standard
 
-KEY = '0010010111' #Change the key here!
+KEY = '1001000001' #Change the key here!
 FIXED_P10 = (3, 5, 2, 7, 4, 10, 1, 9, 8, 6)
 FIXED_P8 = (6, 3, 7, 4, 8, 5, 10, 9)
 FIXED_IO_P8 = (2, 6, 3, 1, 4, 8, 5, 7)
@@ -157,4 +157,4 @@ def decrypt(ct):
     decrypted = permute((l + r), FIXED_IP_INVERSE)
     print "Decrypted Plain Text is {}".format(decrypted)
 
-decrypt(encrypt('10100101'))
+decrypt(encrypt('01000111'))
